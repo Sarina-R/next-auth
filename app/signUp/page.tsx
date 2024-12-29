@@ -17,7 +17,7 @@ const SignUp = () => {
         password,
       });
       if (response.status === 200) {
-        signIn("Credentials", { email, password });
+        signIn("Credentials", { email, password, callbackUrl: "/" });
       }
     } catch (error) {
       setError("Failed to sign up");

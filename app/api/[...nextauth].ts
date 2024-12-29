@@ -28,7 +28,6 @@ export default NextAuth({
         );
         if (!isPasswordValid) throw new Error("Invalid email or password");
 
-        // Return user with id, name, and email
         return { id: user.id, name: user.name, email: user.email };
       },
     }),
@@ -40,19 +39,25 @@ export default NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
+      if (token) {
         session.user = {
-          id: token.id as string,
-          name: session.user.name || null,
-          email: session.user.email || null,
-          image: session.user.image || null,
+          //   id: token.id,
+          name: token.name,
+          email: token.email,
         };
       }
       return session;
     },
+  },
+
+  pages: {
+    signIn: "/",
+    signOut: "/",
   },
 });
