@@ -8,6 +8,10 @@ import Link from "next/link";
 export default function Home() {
   const { data: session, status } = useSession();
 
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/" });
+  };
+
   if (status === "loading") {
     return <p>Loading...</p>;
   }
@@ -20,18 +24,10 @@ export default function Home() {
         {session ? (
           <>
             <h4>Welcome </h4> <p>Email: {session.user?.email}</p>
-            <Button
-              onClick={() =>
-                signOut({
-                  callbackUrl: "/",
-                })
-              }
-            >
-              Sign Out
-            </Button>
           </>
         ) : (
           <>
+            <Button onClick={handleSignOut}>Sign Out</Button>
             <Link href="/signIn">
               <Button>Sign In</Button>
             </Link>

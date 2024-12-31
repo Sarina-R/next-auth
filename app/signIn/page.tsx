@@ -13,10 +13,13 @@ const SignInPage = () => {
     try {
       const res = await axios.post("/api/auth/signin", { email, password });
       if (res.status === 200) {
-        signIn("credentials", { email, password, callbackUrl: "/" });
+        signIn("Credentials", { email, password, callbackUrl: "/" });
       }
     } catch (error) {
       console.error("Error signing in", error);
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+      }
     }
   };
 
